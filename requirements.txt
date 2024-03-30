@@ -1,0 +1,15 @@
+opencv-python==4.9.0.80
+nltk==3.8.1
+plotly==5.20.0
+pillow==10.2.0
+SQLAlchemy==2.0.29
+Flask-SQLAlchemy==3.1.1
+Flask==3.0.2
+google-api-core==2.18.0
+google-auth==2.29.0
+google-cloud-vision==3.7.2
+googleapis-common-protos==1.63.0
+mysql-connector-python==8.3.0
+numpy==1.24.3
+python-dotenv==0.19.2
+boto3==1.28.74

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html> 
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    {% if title %}
+        <title>Spending Analysis - {{ title }}</title>
+    {% else %}
+        <title>Spending Analysis</title>
+    {% endif %}
+    <style>
+      .flash-messages {
+          text-align: left; /* Align flash messages to the left */
+          margin-left: 0px; /* Add some margin for better readability */
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse d-flex justify-content-center w-100" id="navbarToggle">
+            <h1 class="navbar-brand mx-auto">Spending Analysis Application</h1>
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="{{url_for('home')}}">Home</a>
+              <a class="nav-item nav-link" href="{{url_for('upload')}}">Upload</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      {% if message %}
+        <p><strong>Holaa!!!! {{message}}</strong></p>
+      {% endif %}
+    </div>
+    
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-5 col-xs-8 col-xs-offset-3" id="uploadContainer">
+          <div class="content-section item-two text-center">
+            <h3>Upload Invoice Image</h3>
+            <form class="form-group" action="/upload" method="post" enctype="multipart/form-data">
+              <div class="form-control-container">
+                <div class="form-group">
+                  <label for="myfile">Select file(s): </label>
+                  <input type="file" id="myfile" name="file" multiple>
+                </div>
+                <div class="form-group">
+                  <input class="op btn btn-primary label-upload-chart" type="submit" value="Upload">
+                </div>
+                <div class="flash-messages">
+                  {% with messages = get_flashed_messages(category_filter=['upload_success','upload_error']) %}
+                    {% if messages %}
+                      <ul class="flashes">
+                        {% for message in messages %}
+                          <li>{{ message }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  {% endwith %}
+                </div>  
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+        
+        {% block content %}{% endblock %}
+
+        <div class="col-md-4 col-xs-8 col-xs-offset-3">
+          <div class="content-section item-two text-center">
+            <h3>Spending Analysis</h3>
+            <p class='text-muted'>Spendings across different Merchants</p>                
+            <form class="form-group" action="/get_chart_data" method="post">
+              <div class="form-control-container">
+                <div class="form-group">
+                  <label for="Record" class="label-record">Records</label>
+                  <select class="form-control" id="Record" name="Record">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Latest Record">Latest Record</option>
+                    <option value="Current Month">Current Month</option>
+                    <option value="Current Year">Current Year</option>
+                    <option value="Total Spendings">Total Spendings</option>
+                  </select>
+                </div>
+                <div class="row">
+                  <div class="label-container">
+                    <label for="from_date" class="label-from">From</label>
+                    <label for="to_date" class="label-to">To</label>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group datepicker-container">
+                      <div class="input-group">
+                        <option value="" disabled selected></option>
+                        <input id="from_date" class="form-control datepicker-input" name="from_date" placeholder="mm/dd/yyyy">
+                        <div class="input-group-append">
+                          <span class="input-group-text calendar-icon" id="fromCalendarIcon"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                    <script>
+                      const datepickerFrom = flatpickr('#from_date', {
+                        altInput: true,
+                        altFormat: "m/d/Y",
+                        dateFormat: "Y-m-d",
+                        onClose: function(selectedDates) {
+                          datepickerTo.set("minDate", selectedDates[0] || null);
+                        }
+                      });
+                      const calendarIconFrom = document.querySelector("#fromCalendarIcon");
+                      calendarIconFrom.addEventListener("click", function() {
+                        datepickerFrom.open();
+                      });
+                    </script>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group datepicker-container">
+                      <div class="input-group">
+                        <input id="to_date" class="form-control datepicker-input" name="to_date" placeholder="mm/dd/yyyy">
+                        <div class="input-group-append">
+                          <span class="input-group-text calendar-icon" id="toCalendarIcon"><i class="fas fa-calendar-alt"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+                    <script>
+                      const datepickerTo = flatpickr('#to_date', {
+                        altInput: true,
+                        altFormat: "m/d/Y",
+                        dateFormat: "Y-m-d",
+                        onClose: function(selectedDates) {
+                          datepickerFrom.set("maxDate", selectedDates[0] || null);
+                        }
+                      });
+                      const calendarIconTo = document.querySelector("#toCalendarIcon");
+                      calendarIconTo.addEventListener("click", function() {
+                        datepickerTo.open();
+                      });
+                    </script>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Chart" class="label-chart">Chart<span class="required">*</span></label>
+                  <select class="form-control" id="Chart" name="Chart">
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Pie">Pie Chart</option>
+                    <option value="Bar">Bar Chart</option>
+                    <option value="Line">Line Chart</option>
+                  </select>
+                </div>
+                <div class="text-center"> 
+                  <input class="op btn btn-primary label-generate-chart" type="submit" value="Generate Chart">
+                </div>
+              </div>
+            </form>
+            <div class="flash-messages">
+              {% with messages = get_flashed_messages(category_filter=["error","success"]) %}
+                {% if messages %}
+                  <ul class="flashes">
+                    {% for message in messages %}
+                      <li>{{ message }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endwith %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7 col-xs-8 col-xs-offset-1  mt-15" id="chartContainer" style="display: block;">
+          {% if visual_chart %}
+            {% if visual_chart|length > 0 %}
+              {{ visual_chart|safe }}
+            {% else %}
+              <p>No chart data available.</p>
+            {% endif %}
+          {% else %}
+            <p></p>
+          {% endif %}
+        </div>
+      </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

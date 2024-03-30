@@ -1,0 +1,279 @@
+body {
+    background: #fafafa;
+    color: #333333;
+    margin-top: 5rem;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #444444;
+  }
+  
+  .bg-steel {
+    background-color: #5f788a;
+  }
+  
+  .site-header .navbar-nav .nav-link {
+    color: #cbd5db;
+  }
+  
+  .site-header .navbar-nav .nav-link:hover {
+    color: #ffffff;
+  }
+  
+  .site-header .navbar-nav .nav-link.active {
+    font-weight: 500;
+  }
+  
+  .content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    padding: 20px; /* Increase the padding to create more space within the container */
+    max-width: 800px; /* Increase the maximum width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+    margin-bottom: 50px;
+  }
+  
+  .article-title {
+    color: #444444;
+  }
+  
+  a.article-title:hover {
+    color: #428bca;
+    text-decoration: none;
+  }
+  
+  .article-content {
+    white-space: pre-line;
+  }
+  
+  .article-img {
+    height: 65px;
+    width: 65px;
+    margin-right: 16px;
+  }
+  
+  .article-metadata {
+    padding-bottom: 1px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #e3e3e3
+  }
+  
+  .article-metadata a:hover {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .article-svg {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+  }
+  
+  .account-img {
+    height: 125px;
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .account-heading {
+    font-size: 2.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Adjust the gap value as needed */
+    margin-top: 20px;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+  }
+
+  .ok {
+    flex-grow: 1; /* Allows the file input to take up remaining space */
+  }
+
+  .op {
+    padding: 6px 12px; /* Adjust the padding to decrease the button size */
+    font-size: 13px; /* Adjust the font size as needed */
+  }
+
+  .small-text {
+    font-size: 0.8rem; /* or any other small font size you prefer */
+  }
+
+  .list-group-item.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+/* Import Font Awesome CSS for the calendar icon */
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css";
+
+/* .input-group-text {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  padding: 8px 12px;
+  cursor: pointer;
+} */
+
+.datepicker-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: -11px;
+  margin-top: 0px;
+}
+
+.datepicker-input {
+  width: 50%;
+  height: 38px; /* Set a fixed height */
+  border: 1px solid #ced4da;
+  border-radius: 2px 0 0 2px; /* Add border-radius for left side */
+  padding: 6px 12px; /* Add padding for better spacing */
+  font-size: 16px; /* Adjust font size if needed */
+  background-color: #fff; /* Set background color */
+}
+
+.calendar-icon {
+  display: flex; /* Use flexbox to align the icon */
+  align-items: center; /* Align icon vertically */
+  justify-content: center; /* Center icon horizontally */
+  height: 38px; /* Set the same height as the input */
+  padding: 0 10px; /* Adjust padding as needed */
+  background-color: #fff; /* Set the same background color as the input */
+  border: 1px solid #ced4da; /* Add border */
+  border-left: none; /* Remove left border */
+  border-radius: 0 2px 2px 0; /* Add border-radius for right side */
+  cursor: pointer;
+  margin-right: -5px;
+}
+
+.calendar-icon i {
+  font-size: 18px;
+  color: #6c757d;
+}
+
+.label-record {
+  margin-right: 35px; /* Adjust the margin between the "From" label and the input */
+  margin-top: -5px; /* Adjust the margin between the "From" label and the input */
+  margin-left: 15px;
+  margin-bottom: 30px;
+}
+.label-chart {
+  margin-right: 32px; /* Adjust the margin between the "From" label and the input */
+  margin-top: 0px; /* Adjust the margin between the "From" label and the input */
+  margin-left: 15px;
+}
+
+.label-container {
+  display: flex;
+  margin-left: 30px; /* Adjust the value to move the labels more to the left */
+  margin-top: 20px;
+}
+
+.label-from {
+  margin-right: 90px;
+  margin-top: -10px;
+  margin-bottom: -70px;
+}
+
+.label-to {
+  margin-left: 20px;
+  margin-top: -10px;
+  margin-bottom: -40px;
+}
+
+.label-select-date {
+  margin-left: 15px; /* Adjust the margin between "Select Date" label and input */
+  margin-bottom: -15px; /* Adjust the margin between "Select Date" label and input */
+}
+
+.label-generate-chart {
+  margin-left: 0px; /* Adjust the margin between "Select Date" label and input */
+  margin-bottom: -15px; /* Adjust the margin between "Select Date" label and input */
+}
+
+.label-upload-chart {
+  margin-left: 130px; /* Adjust the margin between "Select Date" label and input */
+  margin-bottom: -15px; /* Adjust the margin between "Select Date" label and input */
+}
+
+.item-two {
+  grid-area: main;
+  background-color: rgb(156, 212, 238);
+}
+
+/* .form-control-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+} */
+
+.form-control-container .form-control {
+  margin-bottom: 10px; /* Adjust the spacing between the dropdown and the button */
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-row > .col-auto {
+  padding-right: 10px;
+}
+
+.form-row > .col {
+  flex: 1;
+}
+
+.ok {
+  display: none; /* Hide the default file input */
+}
+
+.file-label {
+  background-color: #e9eaec;
+  color: #0b0a0a;
+  padding: 15px 15px;
+  border-radius: 0px;
+  cursor: pointer;
+  margin-left: 40px;
+}
+
+.file-label:hover {
+  background-color: #f1f5f2;
+}
+
+#chartContainer {
+    position: absolute;
+    top: 80px;
+    left: 0;
+}
+
+
