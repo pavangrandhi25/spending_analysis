@@ -18,13 +18,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3 
     - name: Build Docker Image
-      id: docker_build
       run: |
         docker buildx build \
           --build-arg SERVICE_ACCOUNT_JSON="$(echo $SERVICE_ACCOUNT_JSON)" \
           --build-arg SECRET_KEY="$(echo $SECRET_KEY)" \
           --build-arg DB_NAME="$(echo $DB_NAME)" \
-          -t spending_analysis .
+          -t pavangrandhi25/spending_analysis .
           
     - name: Login to Docker Hub
       uses: docker/login-action@v2
@@ -32,10 +31,31 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
         
+    - name: Install jq
+      run: sudo apt-get install -y jq
+
+    - name: Get latest version tag
+      id: get_latest_tag
+      run: |
+        LATEST_TAG=$(curl -s "https://hub.docker.com/v2/repositories/pavangrandhi25/spending_analysis/tags/?page_size=1" | jq -r '.results[0].name // empty')
+        echo "latest_tag=${LATEST_TAG}" >> $GITHUB_ENV
+
+    - name: Increment version tag
+      id: increment_tag
+      run: |
+        if [ -z "${{ env.latest_tag }}" ]; then
+          NEXT_TAG="v1"
+        else
+          # Extract the version number from the latest tag and increment it
+          VERSION_NUMBER=$(echo "${{ env.latest_tag }}" | sed 's/v//')
+          NEXT_VERSION=$((VERSION_NUMBER + 1))
+          NEXT_TAG="v${NEXT_VERSION}"
+        fi
+        echo "NEXT_TAG: $NEXT_TAG"
+        echo "::set-output name=next_tag::$NEXT_TAG"
+        
     - name: Push Docker Image
       run: |
-        docker tag spending_analysis:latest spending_analysis:${{ github.sha }}
-        docker push spending_analysis:${{ github.sha }}
-      
-    - name: Image Digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
+        docker tag pavangrandhi25/spending_analysis:latest pavangrandhi25/spending_analysis:${{ steps.increment_tag.outputs.next_tag }}
+        docker push pavangrandhi25/spending_analysis:${{ steps.increment_tag.outputs.next_tag }}
+        
