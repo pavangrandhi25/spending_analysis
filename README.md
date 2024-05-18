@@ -1,6 +1,6 @@
 # Spending Analysis Application
 
-This repository contains the source code for a comprehensive web-based spending analysis application developed using Python, Flask, NLP, SQL Alchemy, and Plotly. The application offers users a convenient platform to analyze their spending patterns through interactive visualizations and accurate extraction of text data from invoice images.
+This repository contains the source code for a comprehensive web-based spending analysis application developed using **Python, Flask, OCR, NLP, SQL Alchemy, and Plotly**. The application offers users a convenient platform to analyze their spending patterns through interactive visualizations and accurate extraction of text data from invoice images.
 
 **Key Features**:
 
